@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A Desktop Clock" />
+  <meta name="keywords" content="Desktop Clock" />
+  <meta name="author" content="Ian Neal Higginson" />
+  <title>A Desktop Clock</title>
+  <style>
+   body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Lato", sans-serif;
+   }
+
+   #content {
+    height: 100vh;
+    width: 100%;
+    background-color: #14080e;
+    color: #e9eb9e;
+    text-align: center;
+   }
+
+   #dateContainer,
+   #longDateContainer,
+   #timeContainer {
+    font-size: 50px;
+    position: relative;
+    top: 50px;
+    width: 100%;
+   }
+
+   #tbl {
+    position: relative;
+    top: 50px;
+   }
+
+   #hCell {
+    font-size: 50px;
+   }
+
+   #mCell {
+    font-size: 50px;
+   }
+
+   #sCell {
+    font-size: 50px;
+   }
+
+   #hpCell {
+    font-size: 50px;
+   }
+
+   #mpCell {
+    font-size: 50px;
+   }
+
+   #spCell {
+    font-size: 50px;
+   }
+
+   progress {
+    border: #000 solid thin;
+    border-radius: 10px;
+    height: 150px;
+    transform: rotate(270deg);
+   }
+
+   .progressCell {
+    width: 10px;
+   }
+
+   #hour::-moz-progress-bar {
+    background: #90ee90;
+   }
+
+   #hour::-webkit-progress-value {
+    background: #90ee90;
+   }
+
+   #hour {
+    color: #90ee90;
+   }
+
+   #minute::-moz-progress-bar {
+    background: #87ceeb;
+   }
+
+   #minute::-webkit-progress-value {
+    background: #87ceeb;
+   }
+
+   #minute {
+    color: #87ceeb;
+   }
+
+   #second::-moz-progress-bar {
+    background: #fff44f;
+   }
+
+   #second::-webkit-progress-value {
+    background: #fff44f;
+   }
+
+   #second {
+    color: #fff44f;
+   }
+  </style>
+ </head>
+
+ <body>
+  <section id="content">
+   <div id="dateContainer"></div>
+   <div id="longDateContainer"></div>
+   <div id="timeContainer"></div>
+
+   <p>&nbsp;</p>
+   <!-- Spacer -->
+
+   <table id="tbl" style="margin-left: auto; margin-right: auto">
+    <tr>
+     <!-- Spacer -->
+     <td>&nbsp;</td>
+     <td>&nbsp;</td>
+     <td>&nbsp;</td>
+     <td>&nbsp;</td>
+     <td>&nbsp;</td>
+    </tr>
+    <tr>
+     <!-- Spacer -->
+     <td>&nbsp;</td>
+     <td>&nbsp;</td>
+     <td>&nbsp;</td>
+     <td>&nbsp;</td>
+     <td>&nbsp;</td>
+    </tr>
+
+    <tr>
+     <td class="progressCell">
+      <progress id="hour" value="24" max="24">24</progress>
+     </td>
+     <td>&nbsp;</td>
+     <td class="progressCell">
+      <progress id="minute" value="60" max="60">60</progress>
+     </td>
+     <td>&nbsp;</td>
+     <td class="progressCell">
+      <progress id="second" value="60" max="60">60</progress>
+     </td>
+    </tr>
+
+    <tr>
+     <!-- Spacer -->
+     <td>&nbsp;</td>
+     <td>&nbsp;</td>
+     <td>&nbsp;</td>
+     <td>&nbsp;</td>
+     <td>&nbsp;</td>
+    </tr>
+    <tr>
+     <!-- Spacer -->
+     <td>&nbsp;</td>
+     <td>&nbsp;</td>
+     <td>&nbsp;</td>
+     <td>&nbsp;</td>
+     <td>&nbsp;</td>
+    </tr>
+    <tr>
+     <!-- Spacer -->
+     <td>&nbsp;</td>
+     <td>&nbsp;</td>
+     <td>&nbsp;</td>
+     <td>&nbsp;</td>
+     <td>&nbsp;</td>
+    </tr>
+
+    <tr>
+     <td id="hCell">H</td>
+     <td>&nbsp;</td>
+     <td id="mCell">m</td>
+     <td>&nbsp;</td>
+     <td id="sCell">s</td>
+    </tr>
+
+    <tr>
+     <td id="hpCell">H</td>
+     <td>&nbsp;</td>
+     <td id="mpCell">m</td>
+     <td>&nbsp;</td>
+     <td id="spCell">s</td>
+    </tr>
+   </table>
+  </section>
+ </body>
+
+ <script>
+  /**
+   *
+   ** It's all just for fun.
+   *
+   */
+
+  function clock() {
+   const _date = new Date();
+
+   let year = _date.getFullYear();
+   let month = _date.getMonth();
+   let sdm = parseInt(month) + 1;
+   let monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+   ];
+   let thisMonthIs = monthNames[month];
+   console.log(thisMonthIs);
+
+   month < 10 ? (month = "0" + month) : (month = month);
+   sdm < 10 ? (sdm = "0" + sdm) : (sdm = sdm);
+
+   let date = _date.getDate();
+
+   date < 10 ? (date = "0" + date) : (date = date);
+   let nthDate =
+    parseInt(date) < 2
+     ? date + "st"
+     : date === 2
+     ? date + "nd"
+     : date === 3
+     ? date + "rd"
+     : date + "th";
+
+   let day = _date.getDay();
+   let dayDays = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednessday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+   ];
+   let toDayIs = dayDays[day];
+   console.log(toDayIs);
+
+   let theDate = date + "/" + sdm + "/" + year;
+   let theLongDate = toDayIs + ", " + nthDate + " " + thisMonthIs + " " + year + ".";
+
+   let hrs = _date.getHours();
+   hrs = hrs < 10 ? "0" + hrs : hrs;
+   let mins = _date.getMinutes();
+   mins = mins < 10 ? "0" + mins : mins;
+   let secs = _date.getSeconds();
+   secs = secs < 10 ? "0" + secs : secs;
+   let theTime = hrs + ":" + mins + ":" + secs;
+
+   let phrs = (100 * hrs) / 24;
+   let pmins = (100 * mins) / 60;
+   let psecs = (100 * secs) / 60;
+
+   document.getElementById("dateContainer").innerText = theDate;
+   document.getElementById("longDateContainer").innerText = theLongDate;
+   document.getElementById("timeContainer").innerText = theTime;
+
+   document.getElementById("hpCell").innerText = phrs.toFixed(2) + "%";
+   document.getElementById("mpCell").innerText = pmins.toFixed(2) + "%";
+   document.getElementById("spCell").innerText = psecs.toFixed(2) + "%";
+
+   document.getElementById("hCell").innerText = hrs;
+   document.getElementById("mCell").innerText = mins;
+   document.getElementById("sCell").innerText = secs;
+
+   document.getElementById("hour").value = hrs;
+   document.getElementById("minute").value = mins;
+   document.getElementById("second").value = secs;
+
+   setTimeout(clock, 1000);
+  }
+
+  clock();
+
+  // End
+ </script>
+</html>
