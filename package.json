@@ -1,0 +1,19 @@
+{
+  "name": "desktopclock",
+  "version": "1.0.060122.2103",
+  "description": "A desktop clock",
+  "main": "functionClock.js",
+  "scripts": {
+    "test": "clock"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://"
+  },
+  "keywords": [
+    "desktop",
+    "clock"
+  ],
+  "author": "Ian Neal Higginson",
+  "license": "MIT"
+}

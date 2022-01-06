@@ -225,13 +225,11 @@
    ];
    let thisMonthIs = monthNames[month];
    console.log(thisMonthIs);
-
    month < 10 ? (month = "0" + month) : (month = month);
    sdm < 10 ? (sdm = "0" + sdm) : (sdm = sdm);
 
    let date = _date.getDate();
-
-   date < 10 ? (date = "0" + date) : (date = date);
+   date = date < 10 ? "0" + date : date;
    let nthDate =
     parseInt(date) < 2
      ? date + "st"
@@ -255,7 +253,8 @@
    console.log(toDayIs);
 
    let theDate = date + "/" + sdm + "/" + year;
-   let theLongDate = toDayIs + ", " + nthDate + " " + thisMonthIs + " " + year + ".";
+   let theLongDate =
+    toDayIs + ", " + nthDate + " " + thisMonthIs + " " + year + ".";
 
    let hrs = _date.getHours();
    hrs = hrs < 10 ? "0" + hrs : hrs;

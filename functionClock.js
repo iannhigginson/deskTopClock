@@ -1,4 +1,11 @@
-function clock() {
+/**
+ * @package clock
+ * @version 1.0.060122.2103
+ * @author Ian Neal Higginson
+ */
+
+
+function clock () {
  const _date = new Date();
 
  let year = _date.getFullYear();
