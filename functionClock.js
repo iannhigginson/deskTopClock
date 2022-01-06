@@ -4,8 +4,7 @@
  * @author Ian Neal Higginson
  */
 
-
-function clock () {
+function clock() {
  const _date = new Date();
 
  let year = _date.getFullYear();
@@ -56,12 +55,9 @@ function clock () {
   ** Get the first,second,third and the ths
   */
  date =
-  date < 2
-   ? `${date}st`
-   : date === 2
-   ? `${date}nd`
-   : date === 3
-   ? `${date}rd`
+  date < 2 ? `${date}st`
+   : date === 2 ? `${date}nd`
+   : date === 3 ? `${date}rd`
    : `${date}th`;
 
  console.log({ date });

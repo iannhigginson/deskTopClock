@@ -234,12 +234,12 @@
    date < 10 ? (date = "0" + date) : (date = date);
    let nthDate =
     parseInt(date) < 2
-     ? date + "st"
+     ? date + "<sup>st</sup>"
      : date === 2
-     ? date + "nd"
+     ? date + "<sup>nd</sup>"
      : date === 3
-     ? date + "rd"
-     : date + "th";
+     ? date + "<sup>rd</sup>"
+     : date + "<sup>th</sup>";
 
    let day = _date.getDay();
    let dayDays = [
@@ -270,7 +270,7 @@
    let psecs = (100 * secs) / 60;
 
    document.getElementById("dateContainer").innerText = theDate;
-   document.getElementById("longDateContainer").innerText = theLongDate;
+   document.getElementById("longDateContainer").innerHTML = theLongDate;
    document.getElementById("timeContainer").innerText = theTime;
 
    document.getElementById("hpCell").innerText = phrs.toFixed(2) + "%";
