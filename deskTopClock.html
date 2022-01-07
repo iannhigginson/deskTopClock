@@ -205,9 +205,19 @@
    */
 
   function clock() {
+   /**
+    ** Getting the date and time
+    */
    const _date = new Date();
 
+   /**
+    ** The year
+    */
    let year = _date.getFullYear();
+
+   /**
+    ** The month
+    */
    let month = _date.getMonth();
    let sdm = parseInt(month) + 1;
    let monthNames = [
@@ -229,17 +239,44 @@
    month < 10 ? (month = "0" + month) : (month = month);
    sdm < 10 ? (sdm = "0" + sdm) : (sdm = sdm);
 
+   /**
+    ** The date
+    */
    let date = _date.getDate();
    date = date < 10 ? "0" + date : date;
+   /**
+    ** Looking for the first, second, third or th
+    */
    let nthDate =
-    parseInt(date) < 2
+    parseInt(date) === 1
      ? date + "<sup>st</sup>"
      : date === 2
      ? date + "<sup>nd</sup>"
      : date === 3
      ? date + "<sup>rd</sup>"
      : date + "<sup>th</sup>";
+   /**
+    ** Looking for the twenty-first, twenty-second, twenty-third or th
+    */
+   nthDate =
+    parseInt(date) === 21
+     ? date + "<sup>st</sup>"
+     : date === 22
+     ? date + "<sup>nd</sup>"
+     : date === 23
+     ? date + "<sup>rd</sup>"
+     : date + "<sup>th</sup>";
+   /**
+    ** Looking for the thirty-first or th
+    */
+   nthDate =
+    parseInt(date) === 31
+    ? date + "<sup>st</sup>"
+   : date + "<sup>th</sup>";
 
+   /**
+    ** The day of the week
+    */
    let day = _date.getDay();
    let dayDays = [
     "Sunday",
@@ -253,10 +290,15 @@
    let toDayIs = dayDays[day];
    console.log(toDayIs);
 
+   /**
+    ** Some date outputs
+    */
    let theDate = date + "/" + sdm + "/" + year;
-   let theLongDate =
-    toDayIs + ", " + nthDate + " " + thisMonthIs + " " + year + ".";
+   let theLongDate = toDayIs + " " + nthDate + " " + thisMonthIs + " " + year;
 
+   /**
+    ** The time
+    */
    let hrs = _date.getHours();
    hrs = hrs < 10 ? "0" + hrs : hrs;
    let mins = _date.getMinutes();
