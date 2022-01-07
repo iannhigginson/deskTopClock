@@ -270,9 +270,7 @@
     ** Looking for the thirty-first or th
     */
    nthDate =
-    parseInt(date) === 31
-    ? date + "<sup>st</sup>"
-   : date + "<sup>th</sup>";
+    parseInt(date) === 31 ? date + "<sup>st</sup>" : date + "<sup>th</sup>";
 
    /**
     ** The day of the week
@@ -298,6 +296,8 @@
 
    /**
     ** The time
+    *? Put a "0" in front if it's less than 10
+    *? This will make it a string
     */
    let hrs = _date.getHours();
    hrs = hrs < 10 ? "0" + hrs : hrs;
@@ -307,22 +307,48 @@
    secs = secs < 10 ? "0" + secs : secs;
    let theTime = hrs + ":" + mins + ":" + secs;
 
+   /**
+    ** The percentages
+    *? Set the percentages too two decimal places
+    *? before turning them into a string format
+    *? Put a "0" in front if it's less than 10
+    */
    let phrs = (100 * hrs) / 24;
-   let pmins = (100 * mins) / 60;
-   let psecs = (100 * secs) / 60;
+   phrs = phrs.toFixed(2);
+   phrs = phrs < 10 ? "0" + phrs : phrs;
 
+   let pmins = (100 * mins) / 60;
+   pmins = pmins.toFixed(2);
+   pmins = pmins < 10 ? "0" + pmins : pmins;
+
+   let psecs = (100 * secs) / 60;
+   psecs = psecs.toFixed(2);
+   psecs = psecs < 10 ? "0" + psecs : psecs;
+
+   /**
+    ** Display it all
+    *
+    ** The Date
+    */
    document.getElementById("dateContainer").innerText = theDate;
    document.getElementById("longDateContainer").innerHTML = theLongDate;
    document.getElementById("timeContainer").innerText = theTime;
 
-   document.getElementById("hpCell").innerText = phrs.toFixed(2) + "%";
-   document.getElementById("mpCell").innerText = pmins.toFixed(2) + "%";
-   document.getElementById("spCell").innerText = psecs.toFixed(2) + "%";
-
+   /**
+    ** The percentages
+    */
+   document.getElementById("hpCell").innerText = phrs + "%";
+   document.getElementById("mpCell").innerText = pmins + "%";
+   document.getElementById("spCell").innerText = psecs + "%";
+   /**
+    ** The time
+    */
    document.getElementById("hCell").innerText = hrs;
    document.getElementById("mCell").innerText = mins;
    document.getElementById("sCell").innerText = secs;
-
+   /**
+    ** The progress bars
+    */
    document.getElementById("hour").value = hrs;
    document.getElementById("minute").value = mins;
    document.getElementById("second").value = secs;
