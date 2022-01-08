@@ -63,7 +63,7 @@
     font-size: 50px;
    }
 
-   progress {
+   .progressBar {
     border: #000 solid thin;
     border-radius: 10px;
     height: 150px;
@@ -109,6 +109,21 @@
    #second {
     color: #fff44f;
    }
+
+   #msecs::-moz-progress-bar {
+    background: #0000ff;
+   }
+
+   #msecs::-webkit-progress-value {
+    background: #0000ff;
+   }
+
+   #msecs {
+    color: #0000ff;
+    position: relative;
+    top: 50px;
+    width: 90%;
+   }
   </style>
  </head>
 
@@ -119,11 +134,11 @@
    <div id="timeContainer"></div>
 
    <p>&nbsp;</p>
-   <!-- Spacer -->
+   <!--. Spacer -->
 
    <table id="tbl" style="margin-left: auto; margin-right: auto">
     <tr>
-     <!-- Spacer -->
+     <!--. Spacer -->
      <td>&nbsp;</td>
      <td>&nbsp;</td>
      <td>&nbsp;</td>
@@ -131,7 +146,7 @@
      <td>&nbsp;</td>
     </tr>
     <tr>
-     <!-- Spacer -->
+     <!--. Spacer -->
      <td>&nbsp;</td>
      <td>&nbsp;</td>
      <td>&nbsp;</td>
@@ -141,20 +156,24 @@
 
     <tr>
      <td class="progressCell">
-      <progress id="hour" value="24" max="24">24</progress>
+      <progress class="progressBar" id="hour" value="24" max="24">24</progress>
      </td>
      <td>&nbsp;</td>
      <td class="progressCell">
-      <progress id="minute" value="60" max="60">60</progress>
+      <progress class="progressBar" id="minute" value="60" max="60">
+       60
+      </progress>
      </td>
      <td>&nbsp;</td>
      <td class="progressCell">
-      <progress id="second" value="60" max="60">60</progress>
+      <progress class="progressBar" id="second" value="60" max="60">
+       60
+      </progress>
      </td>
     </tr>
 
     <tr>
-     <!-- Spacer -->
+     <!--. Spacer -->
      <td>&nbsp;</td>
      <td>&nbsp;</td>
      <td>&nbsp;</td>
@@ -162,7 +181,7 @@
      <td>&nbsp;</td>
     </tr>
     <tr>
-     <!-- Spacer -->
+     <!--. Spacer -->
      <td>&nbsp;</td>
      <td>&nbsp;</td>
      <td>&nbsp;</td>
@@ -170,7 +189,7 @@
      <td>&nbsp;</td>
     </tr>
     <tr>
-     <!-- Spacer -->
+     <!--. Spacer -->
      <td>&nbsp;</td>
      <td>&nbsp;</td>
      <td>&nbsp;</td>
@@ -194,31 +213,38 @@
      <td id="spCell">s</td>
     </tr>
    </table>
+   <!--
+   * Decided not to use this...
+   .<div style="text-align: center">
+   . <progress id="msecs" value="250" max="250">250</progress>
+   .</div>
+    -->
   </section>
  </body>
 
  <script>
   /**
-   *
-   ** It's all just for fun.
-   *
+   *# It's all just for fun.
    */
 
   function clock() {
    /**
-    ** Getting the date and time
+    *# Getting the date and time
     */
    const _date = new Date();
 
    /**
-    ** The year
+    *~ The year
     */
    let year = _date.getFullYear();
 
    /**
-    ** The month
+    *~ The month
     */
    let month = _date.getMonth();
+   /**
+    *# This - small date format month number
+    */
    let sdm = parseInt(month) + 1;
    let monthNames = [
     "January",
@@ -232,72 +258,111 @@
     "September",
     "October",
     "November",
-    "December",
+    "December"
    ];
    let thisMonthIs = monthNames[month];
    console.log(thisMonthIs);
-   month < 10 ? (month = "0" + month) : (month = month);
-   sdm < 10 ? (sdm = "0" + sdm) : (sdm = sdm);
+   /**
+    *! Making month a two digit numerical output
+    */
+   month = month < 10 ? "0" + month : month;
+   /**
+    *! Making sdm a two digit numerical output
+    *! This - small date format month number
+    *. The month starts @ 0. The sdm was month + 1
+    *. at initalisation to indicate 1 as is in the
+    *. short numerical month representation
+    */
+   sdm = sdm < 10 ? "0" + sdm : sdm;
 
    /**
-    ** The date
+    *~ The date
     */
    let date = _date.getDate();
-   date = date < 10 ? "0" + date : date;
    /**
-    ** Looking for the first, second, third or th
+    *! Looking for the first, second, third or th
+    *# Would a switch statement be better here?
+    *^ It's more code, 14 lines in the IF ELSE against
+    *^ 17 lines in the switch statement
     */
-   let nthDate =
-    parseInt(date) === 1
-     ? date + "<sup>st</sup>"
-     : date === 2
-     ? date + "<sup>nd</sup>"
-     : date === 3
-     ? date + "<sup>rd</sup>"
-     : date + "<sup>th</sup>";
-   /**
-    ** Looking for the twenty-first, twenty-second, twenty-third or th
-    */
-   nthDate =
-    parseInt(date) === 21
-     ? date + "<sup>st</sup>"
-     : date === 22
-     ? date + "<sup>nd</sup>"
-     : date === 23
-     ? date + "<sup>rd</sup>"
-     : date + "<sup>th</sup>";
-   /**
-    ** Looking for the thirty-first or th
-    */
-   nthDate =
-    parseInt(date) === 31 ? date + "<sup>st</sup>" : date + "<sup>th</sup>";
+   let nthDate = "";
+   switch (parseInt(date)) {
+    case 1:
+    case 21:
+    case 31:
+     nthDate = date + "<sup>st</sup>";
+     break;
+    case 2:
+    case 22:
+     nthDate = date + "<sup>nd</sup>";
+     break;
+    case 3:
+    case 23:
+     nthDate = date + "<sup>rd</sup>";
+     break;
+    default:
+     nthDate = date + "<sup>th</sup>";
+     break;
+   }
+
+   //#region IF ELSE
+   // parseInt(date) === 1
+   //  ? date + "<sup>st</sup>"
+   //  : date === 2
+   //  ? date + "<sup>nd</sup>"
+   //  : date === 3
+   //  ? date + "<sup>rd</sup>"
+   //  : date === 21
+   //  ? date + "<sup>st</sup>"
+   //  : date === 22
+   //  ? date + "<sup>nd</sup>"
+   //  : date === 23
+   //  ? date + "<sup>rd</sup>"
+   //  : date === 31
+   //  ? date + "<sup>st</sup>"
+   //  : date + "<sup>th</sup>";
+   //#endregion IF ELSE
 
    /**
-    ** The day of the week
+    *! Making nthDate a two numerical, two alpha output (00th)
+    */
+   nthDate = date < 10 ? "0" + nthDate : nthDate;
+
+   /**
+    *!  date to a two digit string
+    */
+   date = date < 10 ? "0" + date : date;
+
+   /**
+    *! The day of the week
     */
    let day = _date.getDay();
-   let dayDays = [
+   let dayNames = [
     "Sunday",
     "Monday",
     "Tuesday",
     "Wednessday",
     "Thursday",
     "Friday",
-    "Saturday",
+    "Saturday"
    ];
-   let toDayIs = dayDays[day];
+   let toDayIs = dayNames[day];
    console.log(toDayIs);
 
    /**
-    ** Some date outputs
+    *~ Some date outputs
+    *
+    *! Short date format
     */
    let theDate = date + "/" + sdm + "/" + year;
+   /**
+    *! Long date format
+    */
    let theLongDate = toDayIs + " " + nthDate + " " + thisMonthIs + " " + year;
 
    /**
-    ** The time
-    *? Put a "0" in front if it's less than 10
-    *? This will make it a string
+    *~ The time
+    *! Make it a eight digit string
     */
    let hrs = _date.getHours();
    hrs = hrs < 10 ? "0" + hrs : hrs;
@@ -308,56 +373,65 @@
    let theTime = hrs + ":" + mins + ":" + secs;
 
    /**
-    ** The percentages
-    *? Set the percentages too two decimal places
-    *? before turning them into a string format
-    *? Put a "0" in front if it's less than 10
+    *~ The percentages
+    ** Set the percentages too two decimal places
+    ** before turning them into a string format
+    ** Put a "0" in front if it's less than 10
     */
    let phrs = (100 * hrs) / 24;
    phrs = phrs.toFixed(2);
    phrs = phrs < 10 ? "0" + phrs : phrs;
-
    let pmins = (100 * mins) / 60;
    pmins = pmins.toFixed(2);
    pmins = pmins < 10 ? "0" + pmins : pmins;
-
    let psecs = (100 * secs) / 60;
    psecs = psecs.toFixed(2);
    psecs = psecs < 10 ? "0" + psecs : psecs;
 
    /**
-    ** Display it all
+    *# Display it all
     *
-    ** The Date
+    *! The Date
     */
    document.getElementById("dateContainer").innerText = theDate;
    document.getElementById("longDateContainer").innerHTML = theLongDate;
    document.getElementById("timeContainer").innerText = theTime;
-
    /**
-    ** The percentages
+    *! The percentages
     */
    document.getElementById("hpCell").innerText = phrs + "%";
    document.getElementById("mpCell").innerText = pmins + "%";
    document.getElementById("spCell").innerText = psecs + "%";
    /**
-    ** The time
+    *! The time
     */
    document.getElementById("hCell").innerText = hrs;
    document.getElementById("mCell").innerText = mins;
    document.getElementById("sCell").innerText = secs;
    /**
-    ** The progress bars
+    *! The progress bars
     */
    document.getElementById("hour").value = hrs;
    document.getElementById("minute").value = mins;
    document.getElementById("second").value = secs;
 
-   setTimeout(clock, 1000);
+   // setTimeout( clock, 1000 );
+
+   /**
+    *# End
+    */
   }
 
-  clock();
+  // clock();
 
-  // End
+  setInterval( clock, 1000 );
+
+  // var x = 0;
+  // setInterval(function () {
+  //  x = x > 250 ? 0 : x + 1;
+  //  document.getElementById("msecs").value = x;
+  // }, 1);
+
+  //~ End
  </script>
 </html>
